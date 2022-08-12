@@ -10,6 +10,7 @@ function App() {
   const [product, setProduct] = useState({});
   const [participant, setParticipant] = useState({});
   const [account, setAccount] = useState('');
+  const [owner, setOwner] = useState(false);
   const [web3, setWeb3] = useState();
   const [supplyChain, setSupplychain] = useState();
   const firstMount = useRef(true);
@@ -27,6 +28,7 @@ function App() {
 
   useEffect(() => {
     if(!firstMount.current){
+      console.log(web3);
       const initContract = async() => {
         const networkId = await web3.eth.net.getId();
         const networkData = contractJson.networks[networkId];
@@ -39,6 +41,7 @@ function App() {
 
   useEffect(() => {
     if(!firstMount.current){
+      console.log(supplyChain);
       const initAccount = async() => {
         const accounts = await web3.eth.getAccounts();
         setAccount(accounts[0]);
@@ -49,6 +52,7 @@ function App() {
 
   useEffect(() => {
     if(!firstMount.current){
+      console.log(account);
       getProduct();
       console.log('calling getProduct');
     }
@@ -80,7 +84,6 @@ function App() {
     }); 
 
     setRowsData([]);
-    console.log(rowsData);  
 
     for (var i = 0; i < productCount; i++) {
       let product_id = i;
@@ -95,7 +98,7 @@ function App() {
           cost: product[4],
           mfgTimeStamp: product[5],
         };
-        console.log(newRow);
+        // console.log(newRow);
         setRowsData(oldData => [...oldData, newRow]);
       });
     }
@@ -124,6 +127,20 @@ function App() {
     })
   }
 
+  const handleOwnerChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setOwner(values => ({...values, [name]: value}))
+}
+const changeOwnership = async (event) => {
+    event.preventDefault();
+    console.log(account);
+    await supplyChain.methods.newOwner(owner._user1Id, owner._user2Id, owner._prodId)
+    .send({ from : account }, (err, transactionHash) => {
+        console.log(err, transactionHash);
+    });
+}
+
   return (
     <div className="App">
       {/* <header className="App-header">
@@ -137,6 +154,10 @@ function App() {
       />
       <hr/>
       <Product
+        owner={owner}
+        handleOwnerChange={handleOwnerChange}
+        changeOwnership={changeOwnership}
+        supplyChain={supplyChain}
         product={product}
         rowsData={rowsData} 
         handleChange={handleChange} 

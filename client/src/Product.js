@@ -1,16 +1,65 @@
 import { useState } from "react";
 
-export default function Product ({product, rowsData, handleChange, addProduct}){
-    console.log(rowsData);
+export default function Product ({ owner, product, rowsData, handleChange, addProduct, handleOwnerChange, changeOwnership}){
+    // console.log(rowsData);
     var tableHead = ['Product Id', 'Model Number', 'Part Number', 'Serial Number', 'Current Owner', 'Cost', 'Manufacturing Timestamp'];
     const [showHideAddProductInput, setShowHideAddProductInput] = useState(false);
+    const [changeOwnershipInput, setChangeOwnershipInput] = useState(false);
 
     const handleAddProductVisibility = () => {
         setShowHideAddProductInput(!showHideAddProductInput);
     }
+    const handleOnwnershipChange = () => {
+        setChangeOwnershipInput(!changeOwnershipInput);
+    }
 
     return(
         <div>
+            {/* Change Ownership form */}
+            <button onClick={handleOnwnershipChange}>
+                <h3> Change Product Ownership </h3>
+            </button>
+            {changeOwnershipInput ? 
+                <form onSubmit={changeOwnership}>
+                    <label>
+                    Current Owner:
+                    <input 
+                        type = "number"
+                        name="_user1Id"
+                        value={owner._user1Id}
+                        onChange={handleOwnerChange}
+                    />
+                    </label>
+
+                    <label>
+                    New Owner:
+                    <input 
+                        type = "number"
+                        name="_user2Id"
+                        value={owner._user2Id}
+                        onChange={handleOwnerChange}
+                    />
+                    </label>
+
+                    <label>
+                    Product Id:
+                    <input 
+                        type = "number"
+                        name="_prodId"
+                        value={owner._prodId}
+                        onChange={handleOwnerChange}
+                    />
+                    </label>
+
+                    <button  
+                        type="submit"> 
+                        Submit 
+                    </button>
+                </form>
+            : null}
+            <hr/>
+
+            {/* Add New Product */}
             <button onClick={handleAddProductVisibility}>
                 <h3> Want to add a new Product? </h3>
             </button>
@@ -72,6 +121,8 @@ export default function Product ({product, rowsData, handleChange, addProduct}){
                 </form>
             : null}
             <hr/>
+
+            {/* Populate all products */}
             <table className="table table-bordered table-hover">
                 <thead>
                 <tr>
