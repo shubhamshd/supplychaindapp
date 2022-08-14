@@ -132,14 +132,34 @@ function App() {
     const value = event.target.value;
     setOwner(values => ({...values, [name]: value}))
 }
-const changeOwnership = async (event) => {
-    event.preventDefault();
-    console.log(account);
-    await supplyChain.methods.newOwner(owner._user1Id, owner._user2Id, owner._prodId)
-    .send({ from : account }, (err, transactionHash) => {
-        console.log(err, transactionHash);
+  const changeOwnership = async (event) => {
+      event.preventDefault();
+      console.log(account);
+      await supplyChain.methods.newOwner(owner._user1Id, owner._user2Id, owner._prodId)
+      .send({ from : account }, (err, transactionHash) => {
+          console.log(err, transactionHash);
+      });
+  }
+
+  const getOwnerships = async(ownership_Id) => {
+    await supplyChain.methods.getOwnership(ownership_Id)
+    .call({ from : account }, (err, res) => {
+      console.log(err, res);
+    })
+  }
+
+  const getProvenance = async(e) => {
+    e.preventDefault();
+    await supplyChain.methods.getProvenance(e.target.value)
+    .call((err, result) => {
+      console.log(err, result);
+      let upperLimit = result.length
+      for(var i=0; i<upperLimit; i++){
+        let ownership_Id = parseInt(result[i]);
+        getOwnerships(ownership_Id);
+      }
     });
-}
+  }
 
   return (
     <div className="App">
@@ -162,6 +182,7 @@ const changeOwnership = async (event) => {
         rowsData={rowsData} 
         handleChange={handleChange} 
         addProduct={addProduct}
+        getProvenance={getProvenance}
       />
     </div>
   );
