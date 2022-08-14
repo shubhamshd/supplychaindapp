@@ -13,6 +13,7 @@ function App() {
   const [owner, setOwner] = useState(false);
   const [web3, setWeb3] = useState();
   const [supplyChain, setSupplychain] = useState();
+  const [provenance, setProvenance] = useState([]);
   const firstMount = useRef(true);
 
   useEffect(() => {
@@ -145,11 +146,13 @@ function App() {
     await supplyChain.methods.getOwnership(ownership_Id)
     .call({ from : account }, (err, res) => {
       console.log(err, res);
+      setProvenance(oldData => [...oldData, res]);
     })
   }
 
   const getProvenance = async(e) => {
     e.preventDefault();
+    setProvenance([]);
     await supplyChain.methods.getProvenance(e.target.value)
     .call((err, result) => {
       console.log(err, result);
@@ -175,11 +178,12 @@ function App() {
       <hr/>
       <Product
         owner={owner}
-        handleOwnerChange={handleOwnerChange}
-        changeOwnership={changeOwnership}
         supplyChain={supplyChain}
         product={product}
         rowsData={rowsData} 
+        provenance={provenance}
+        handleOwnerChange={handleOwnerChange}
+        changeOwnership={changeOwnership}
         handleChange={handleChange} 
         addProduct={addProduct}
         getProvenance={getProvenance}

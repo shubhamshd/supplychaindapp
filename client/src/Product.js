@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Product ({ owner, product, rowsData, handleChange, addProduct, handleOwnerChange, changeOwnership, getProvenance}){
+export default function Product ({ owner, product, rowsData, provenance, handleChange, addProduct, handleOwnerChange, changeOwnership, getProvenance}){
     // console.log(rowsData);
     var tableHead = ['Product Id', 'Model Number', 'Part Number', 'Serial Number', 'Current Owner', 'Cost', 'Manufacturing Timestamp', ''];
     const [showHideAddProductInput, setShowHideAddProductInput] = useState(false);
@@ -130,7 +130,7 @@ export default function Product ({ owner, product, rowsData, handleChange, addPr
                 </tr>
                 </thead>
                 <tbody>
-                { rowsData && rowsData.map((item, idx) => (          
+                {rowsData && rowsData.map((item, idx) => (          
                     <tr key={idx}>
                         <td>{item.product_id}</td>
                         <td>{item.modelNumber}</td>
@@ -144,6 +144,17 @@ export default function Product ({ owner, product, rowsData, handleChange, addPr
                 ))}
                 </tbody>
             </table>
+            <div>
+                {provenance ?
+                    <div>
+                        <h1>Provenance details: </h1>
+                        {provenance.map((item, idx) => (
+                            <p key={idx}>Owner with id:{item[1]} and address:{item[2]} at time:{item[3]}</p>
+                        ))}
+                    </div>
+                : null}
+            </div>
+        
         </div>
     );
 }
