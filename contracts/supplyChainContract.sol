@@ -1,5 +1,6 @@
 pragma solidity ^0.8.0;
  
+//  Token contract address => 0x7dF307BdED53eAAe9Db33ecC4bf70f81876AE93B
 contract supplyChain {
     uint32 public product_id = 0;   // Product ID
     uint32 public participant_id = 0;   // Participant ID
