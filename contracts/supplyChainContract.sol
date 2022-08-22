@@ -130,7 +130,7 @@ contract supplyChain {
         return (false);
     }
  
-   function getProvenance(uint32 _prodId) external view returns (uint32[] memory) {
+    function getProvenance(uint32 _prodId) external view returns (uint32[] memory) {
  
        return productTrack[_prodId];
     }
