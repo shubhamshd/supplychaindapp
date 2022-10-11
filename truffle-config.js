@@ -21,6 +21,7 @@
 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 require("dotenv").config();
+console.log(process.env.MNEMONIC)
 const path = require('path')
 // console.log(__dirname);
 // console.log(process.env);
@@ -49,6 +50,14 @@ module.exports = {
       provider: () => new HDWalletProvider(process.env.MNEMONIC, `https://rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`),
       network_id: 4,
       gas: 5500000
+    },
+
+    matic: {
+      provider: () => new HDWalletProvider(process.env.MNEMONIC, `https://rpc-mumbai.maticvigil.com`),
+      network_id: 80001,
+      confirmations: 2,
+      timeoutBlocks: 200,
+      skipDryRun: true
     }
 
   },
