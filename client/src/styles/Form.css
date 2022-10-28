@@ -1,0 +1,36 @@
+/* *{
+    background: lavender;
+    padding: 20px;   
+} */
+.form-box{
+    background: white;
+    border: 1px solid #dedede;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 0 auto;
+    max-width: 500px;
+    padding: 30px 50px;
+}
+.form-box label{
+    color: #3d3d3d;
+    display: block;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.form-box input{
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 100%;
+}
+.form-box button{
+    background-color: #6976d9;
+    color: white;
+    font-family: sans-serif;
+    font-size: 14px;
+    margin: 20px 0px;
+}

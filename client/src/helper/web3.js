@@ -2,9 +2,13 @@ import Web3 from 'web3';
 
 const getWeb3 = async() => {
     if(window.ethereum){
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-        console.log('MetaMask detected!');
-        return new Web3(window.ethereum);
+        try {
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
+            console.log('MetaMask detected!');
+            return new Web3(window.ethereum);
+        } catch (e) {
+            console.log('Error connecting to provider')
+        }
     }
     else if (window.web3) {
         console.log('inside window.web3')
